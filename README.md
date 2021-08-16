@@ -1,9 +1,11 @@
+[![.NET](https://github.com/aimenux/JsonConverterDemo/actions/workflows/ci.yml/badge.svg)](https://github.com/aimenux/JsonConverterDemo/actions/workflows/ci.yml)
+
 # JsonConverterDemo
 ```
 Implementing custom serialization/deserialization with the concept of JsonConverters
 ```
 
-> In this repo, i m using various libraries in order to implement custom serialization/deserialization with the concept of JsonConverter :
+> In this repo, i m implementing custom serialization/deserialization with the concept of JsonConverters :
 >
 > :one: Using [Json.Net library](https://www.newtonsoft.com/json)
 >
