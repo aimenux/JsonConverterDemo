@@ -1,0 +1,2 @@
+# JsonConverterDemo
+Implementing custom serialization/deserialization with JsonConverters
