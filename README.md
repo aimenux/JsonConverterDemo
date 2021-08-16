@@ -2,10 +2,10 @@
 
 # JsonConverterDemo
 ```
-Implementing custom serialization/deserialization with the concept of JsonConverters
+Implementing custom serialization/deserialization with JsonConverters
 ```
 
-> In this repo, i m implementing custom serialization/deserialization with the concept of JsonConverters :
+> In this repo, i m implementing custom serialization/deserialization with JsonConverters :
 >
 > :one: Using [Json.Net library](https://www.newtonsoft.com/json)
 >
