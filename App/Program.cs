@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using App.Launchers;
 using Bullseye;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.Json;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -13,7 +13,7 @@ namespace App
 {
     public static class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             using (var host = CreateHostBuilder(args).Build())
             {
@@ -26,7 +26,7 @@ namespace App
                         launcher.Launch();
                     });
                 }
-                targets.RunAndExit(args);
+                await targets.RunAndExitAsync(args);
             }
 
             Console.WriteLine("Press any key to exit !");
@@ -37,12 +37,10 @@ namespace App
             Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration((_, config) =>
                 {
-                    config.AddCommandLine(args);
-                    config.AddEnvironmentVariables();
-                    config.SetBasePath(Directory.GetCurrentDirectory());
-                    var environment = Environment.GetEnvironmentVariable("ENVIRONMENT");
-                    config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-                    config.AddJsonFile($"appsettings.{environment}.json", optional: true, reloadOnChange: true);
+                    config
+                        .Sources.OfType<JsonConfigurationSource>()
+                        .First(x => x.Path == "appsettings.json")
+                        .Optional = false;
                 })
                 .ConfigureServices((_, services) =>
                 {
@@ -57,7 +55,7 @@ namespace App
 
         private static void AddNonGenericLogger(this ILoggingBuilder loggingBuilder)
         {
-            var categoryName = typeof(Program).Namespace;
+            var categoryName = typeof(Program).Namespace!;
             var services = loggingBuilder.Services;
             services.AddSingleton(serviceProvider =>
             {

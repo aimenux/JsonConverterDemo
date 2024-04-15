@@ -21,4 +21,4 @@ Implementing custom serialization/deserialization with JsonConverters
 > ![JsonConverterDemoScreen](Screenshots/JsonConverterDemoScreen.png)
 >
 
-**`Tools`** : vs19, net 5.0, json.net, system.text.json, bullseye
+**`Tools`** : net 8.0, json.net, system.text.json, bullseye
