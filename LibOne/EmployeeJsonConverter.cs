@@ -3,12 +3,12 @@ using LibOne.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace LibOne
+namespace LibOne;
+
+public class EmployeeJsonConverter : JsonConverter<Employee>
 {
-    public class EmployeeJsonConverter : JsonConverter<Employee>
+    public override void WriteJson(JsonWriter writer, Employee value, JsonSerializer serializer)
     {
-        public override void WriteJson(JsonWriter writer, Employee value, JsonSerializer serializer)
-        {
             if (value is null)
             {
                 writer.WriteNull();
@@ -35,8 +35,8 @@ namespace LibOne
             employeeJsonObject.WriteTo(writer);
         }
 
-        public override Employee ReadJson(JsonReader reader, Type objectType, Employee existingValue, bool hasExistingValue, JsonSerializer serializer)
-        {
+    public override Employee ReadJson(JsonReader reader, Type objectType, Employee existingValue, bool hasExistingValue, JsonSerializer serializer)
+    {
             var startTokenType = reader.TokenType;
 
             switch (startTokenType)
@@ -65,5 +65,4 @@ namespace LibOne
                     throw new ArgumentOutOfRangeException(startTokenType.ToString());
             }
         }
-    }
 }

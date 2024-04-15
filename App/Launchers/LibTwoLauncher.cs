@@ -4,26 +4,26 @@ using LibTwo;
 using LibTwo.Models;
 using Microsoft.Extensions.Logging;
 
-namespace App.Launchers
+namespace App.Launchers;
+
+public class LibTwoLauncher : ILauncher
 {
-    public class LibTwoLauncher : ILauncher
+    private readonly ILogger<LibTwoLauncher> _logger;
+
+    private static readonly JsonSerializerOptions Options = new()
     {
-        private readonly ILogger<LibTwoLauncher> _logger;
+        Converters = { new EmployeeJsonConverter() }
+    };
 
-        private static readonly JsonSerializerOptions Options = new()
-        {
-            Converters = { new EmployeeJsonConverter() }
-        };
-
-        public LibTwoLauncher(ILogger<LibTwoLauncher> logger)
-        {
+    public LibTwoLauncher(ILogger<LibTwoLauncher> logger)
+    {
             _logger = logger;
         }
 
-        public string Name => "System.Text.Json";
+    public string Name => "System.Text.Json";
 
-        public void Launch()
-        {
+    public void Launch()
+    {
             ConsoleColor.Green.WriteLine($"Using {nameof(LibTwoLauncher)} based on {Name}");
             var employeeJson = SerializeEmployee(CreateEmployee());
             var employee = DeserializeEmployee(employeeJson);
@@ -34,15 +34,14 @@ namespace App.Launchers
             }
         }
 
-        private static Employee CreateEmployee()
-        {
+    private static Employee CreateEmployee()
+    {
             var address = Address.Create("1", "Paris", "France");
             var employee = Employee.Create(1, "Jean", "Bryan", address);
             return employee;
         }
 
-        private static string SerializeEmployee(Employee employee) => JsonSerializer.Serialize(employee, Options);
+    private static string SerializeEmployee(Employee employee) => JsonSerializer.Serialize(employee, Options);
 
-        private static Employee DeserializeEmployee(string employeeJson) => JsonSerializer.Deserialize<Employee>(employeeJson, Options);
-    }
+    private static Employee DeserializeEmployee(string employeeJson) => JsonSerializer.Deserialize<Employee>(employeeJson, Options);
 }

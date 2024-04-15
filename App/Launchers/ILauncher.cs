@@ -1,9 +1,8 @@
-﻿namespace App.Launchers
-{
-    public interface ILauncher
-    {
-        string Name { get; }
+﻿namespace App.Launchers;
 
-        void Launch();
-    }
+public interface ILauncher
+{
+    string Name { get; }
+
+    void Launch();
 }

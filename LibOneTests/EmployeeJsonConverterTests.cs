@@ -5,13 +5,13 @@ using LibOne.Models;
 using Newtonsoft.Json;
 using Xunit;
 
-namespace LibOneTests
+namespace LibOneTests;
+
+public class EmployeeJsonConverterTests
 {
-    public class EmployeeJsonConverterTests
+    [Fact]
+    public void Should_Serialize_Null_Employee()
     {
-        [Fact]
-        public void Should_Serialize_Null_Employee()
-        {
             // arrange
             var settings = new JsonSerializerSettings
             {
@@ -29,9 +29,9 @@ namespace LibOneTests
             json.Should().Be("null");
         }
 
-        [Fact]
-        public void Should_Serialize_Employee_With_Null_Address()
-        {
+    [Fact]
+    public void Should_Serialize_Employee_With_Null_Address()
+    {
             // arrange
             var employee = Employee.Create(1, "Jean", "Snow", default(Address));
             var settings = new JsonSerializerSettings
@@ -50,9 +50,9 @@ namespace LibOneTests
             json.Should().Be("{\"Id\":1,\"FirstName\":\"Jean\",\"LastName\":\"Snow\",\"Address\":null}");
         }
 
-        [Fact]
-        public void Should_Serialize_Employee_With_NotNull_Address()
-        {
+    [Fact]
+    public void Should_Serialize_Employee_With_NotNull_Address()
+    {
             // arrange
             var address = Address.Create("1", "paris", "france");
             var employee = Employee.Create(1, "Jean", "Snow", address);
@@ -72,9 +72,9 @@ namespace LibOneTests
             json.Should().Be("{\"Id\":1,\"FirstName\":\"Jean\",\"LastName\":\"Snow\",\"Address\":{\"Street\":\"1\",\"City\":\"paris\",\"Country\":\"france\"}}");
         }
 
-        [Fact]
-        public void Should_Deserialize_Null_Employee()
-        {
+    [Fact]
+    public void Should_Deserialize_Null_Employee()
+    {
             // arrange
             const string employeeJson = "null";
             var settings = new JsonSerializerSettings
@@ -92,9 +92,9 @@ namespace LibOneTests
             employee.Should().BeNull();
         }
 
-        [Fact]
-        public void Should_Deserialize_Employee_With_Null_Address()
-        {
+    [Fact]
+    public void Should_Deserialize_Employee_With_Null_Address()
+    {
             // arrange
             const string employeeJson = "{\"Id\":1,\"FirstName\":\"Jean\",\"LastName\":\"Snow\",\"Address\":null}";
             var settings = new JsonSerializerSettings
@@ -116,9 +116,9 @@ namespace LibOneTests
             employee.Address.Should().BeNull();
         }
 
-        [Fact]
-        public void Should_Deserialize_Employee_With_NotNull_Address()
-        {
+    [Fact]
+    public void Should_Deserialize_Employee_With_NotNull_Address()
+    {
             // arrange
             const string employeeJson = "{\"Id\":1,\"FirstName\":\"Jean\",\"LastName\":\"Snow\",\"Address\":{\"Street\":\"1\",\"City\":\"paris\",\"Country\":\"france\"}}";
             var settings = new JsonSerializerSettings
@@ -142,5 +142,4 @@ namespace LibOneTests
             employee.Address.City.Should().Be("paris");
             employee.Address.Country.Should().Be("france");
         }
-    }
 }
