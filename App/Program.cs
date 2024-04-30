@@ -15,20 +15,8 @@ public static class Program
 {
     public static async Task Main(string[] args)
     {
-        using (var host = CreateHostBuilder(args).Build())
-        {
-            var launchers = host.Services.GetServices<ILauncher>().ToList();
-            var targets = InitializeTargets(launchers);
-            foreach (var launcher in launchers)
-            {
-                targets.Add(launcher.Name, () =>
-                {
-                    launcher.Launch();
-                });
-            }
-            await targets.RunAndExitAsync(args);
-        }
-
+        using var host = CreateHostBuilder(args).Build();
+        await host.RunAndExitAsync(args);
         Console.WriteLine("Press any key to exit !");
         Console.ReadKey();
     }

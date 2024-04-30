@@ -25,6 +25,8 @@ public class LibOneLauncher : ILauncher
     }
 
     public string Name => "Json.Net";
+    
+    public string[] DependsOn => [];
 
     public void Launch()
     {
